@@ -24,6 +24,14 @@ npm i --save harakiri
 const harakiri = require('harakiri');
 ...
 app.use(harakiri(timeout, {port}));
+...
+server.listen(port, (err) => {
+  if(err) {
+    console.log(err);
+  } else {
+    harakiri.observe();
+    console.log(`Listing on port ${port}`);
+  }
 ```
 
 API
