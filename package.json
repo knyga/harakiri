@@ -1,11 +1,14 @@
 {
   "name": "harakiri",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express middleware to stop node process on getting into the endless loop or long-blocking execution",
   "main": "index.js",
   "directories": {
     "example": "example",
     "test": "test"
+  },
+  "engines": {
+    "node": ">=8.10.0"
   },
   "dependencies": {},
   "devDependencies": {
@@ -15,7 +18,7 @@
   "scripts": {
     "test": "mocha"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": ["express", "middleware", "event loop", "lock", "enless loop", "http server"],
+  "author": "Oleksandr Knyga <oleksandrknyga@gmail.com>",
+  "license": "MIT"
 }

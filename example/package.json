@@ -6,6 +6,9 @@
   "dependencies": {
     "express": "^4.16.3"
   },
+  "engines": {
+    "node": ">=8.10.0"
+  },
   "devDependencies": {},
   "scripts": {
     "start": "node app"
