@@ -5,7 +5,6 @@ const app = new Express();
 const server = new http.Server(app);
 
 process.on('message', function({timeout, port}) {
-  app.use(harakiri(timeout, {port}));
   app.get('/', (req, res) => {
     res.sendStatus(200);
   });
@@ -17,7 +16,7 @@ process.on('message', function({timeout, port}) {
     if(err) {
       console.error(err)
     } else {
-      harakiri.observe();
+      harakiri(1000);
       console.log(`Listening on port ${port}`);
     }
   });

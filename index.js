@@ -1,44 +1,27 @@
 const { fork } = require('child_process');
-const crypto = require('crypto');
+
+let harakiriIntervalId = -1;
 let forked = null;
-let url = null;
-let delay = 15000;
-
-function harakiri(delayInput = delay, urlParamsInput) {
-  const path = '/' + crypto.randomBytes(20).toString('hex');
-  const {port, hostname, protocol} = Object.assign({port: 80, hostname: 'localhost', protocol: 'http'}, urlParamsInput);
-  url = `${protocol}://${hostname}:${port}${path}`;
-  delay = delayInput;
-
-  return function(req, res, next) {
-    if(req.originalUrl === path) {
-      res.sendStatus(200);
-      return;
-    }
-    next();
-  };
-}
-
-harakiri.observe = function() {
+const createAction = (type, payload) => ({ type, payload });
+const killFork = () => {
   if(forked) {
-    forked.kill();
+    forked.kill()
   }
-
+};
+const stop = () => {
+  killFork();
+  clearInterval(harakiriIntervalId);
+};
+const observe = (timeout = 5000) => {
+  stop();
   forked = fork(__dirname + '/fork.js');
-  forked.send({pid: process.pid, delay, url});
-  return forked;
+  const ping = () => forked.send(createAction('ping'));
+  forked.send(createAction('start', { pid: process.pid, timeout }));
+  harakiriIntervalId = setInterval(ping, timeout/2);
+  ping();
+  process.on('exit', killFork);
 };
+observe.stop = stop;
+observe.observe = observe;
 
-harakiri.dismiss = function() {
-  if(forked) {
-    forked.kill();
-  }
-};
-
-process.on('exit', function() {
-  if(forked) {
-    forked.kill();
-  }
-});
-
-module.exports = harakiri;
+module.exports = observe;
