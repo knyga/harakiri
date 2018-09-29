@@ -25,7 +25,7 @@ const harakiri = require('harakiri');
 harakiri.observe();
 ```
 
-To stop observing
+To stop observing.
 ```
 harakiri.stop();
 ```
