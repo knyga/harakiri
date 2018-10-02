@@ -8,6 +8,27 @@ Imagine that in some part of your api you have code which <a href="https://nodej
 For the sake of simplicity, imagine that somebody from your team created code like `while(true);` which would execute on some specific case.
 At this situation you may want to stop processing problematic request. Sadly, but you can't just stop it usually. You would need to restart your server.
 
+```
+const Express = require('express');
+const http = require('http');
+const app = new Express();
+const server = new http.Server(app);
+const port = 3000;
+app.get('/', (req, res) => res.send('Hello!!'));
+app.get('/loop', (req, res) => {
+  while(true);
+});
+
+server.listen(port, (err) => {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log(`Listing on port ${port}`);
+  }
+});
+```
+For example, if you would open /loop route in your browser then no other user would be able to access the page. But if you add harakiri, just one line `require('harakiri')(2000);` then in the same situation server would be stopped after 2 seconds of execution after user would open /loop page. Your process manager like <a href="http://pm2.keymetrics.io/">pm2</a> or <a href="https://github.com/foreverjs/forever">forever</a> would restart it.
+
 
 How it works
 -----------
