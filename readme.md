@@ -27,7 +27,7 @@ server.listen(port, (err) => {
   }
 });
 ```
-For example, if you would open /loop route in your browser then no other user would be able to access the page. But if you add harakiri, just one line `require('harakiri')(2000);` then in the same situation server would be stopped after 2 seconds of execution after user would open /loop page. Your process manager like <a href="http://pm2.keymetrics.io/">pm2</a> or <a href="https://github.com/foreverjs/forever">forever</a> would restart it.
+For example, if you would open `/loop` route in your browser then no other user would be able to access the page. But if you would add harakiri, just one line `require('harakiri')(2000);` then in the same situation server would be stopped after 2 seconds of execution after user would open `/loop` page. Your process manager like <a href="http://pm2.keymetrics.io/">pm2</a> or <a href="https://github.com/foreverjs/forever">forever</a> would do the rest to go back to the normal flow.
 
 
 How it works
