@@ -67,4 +67,4 @@ Kill child process and stop observation.
 
 Licence
 -----------
-harakiri is [MIT licensed](./LICENSE).
+harakiri is [MIT licenсed](./LICENСE).
